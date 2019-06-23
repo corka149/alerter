@@ -1,6 +1,6 @@
 # Alerter
 
-Triggers an alert when it receives a signal via UDP (normally port 4010).
+Triggers an alert when it receives a signal via UDP (normally port 4040).
 
 ## Config
 
