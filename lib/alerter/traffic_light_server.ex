@@ -1,4 +1,4 @@
-defmodule TrafficLightServer do
+defmodule Alerter.TrafficLightServer do
   require Logger
 
   @spec accept(char) :: no_return
