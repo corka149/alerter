@@ -18,8 +18,8 @@ defmodule Alerter do
     {:ok, green} = GPIO.open(@green_led_pin, :output)
     {:ok, yellow} = GPIO.open(@yello_led_pin, :output)
     {:ok, red} = GPIO.open(@red_led_pin, :output)
+    GPIO.write(green, 1)
     Agent.start(fn -> %{green: green, yellow: yellow, red: red} end, [name: __MODULE__])
-    activate_green()
   end
 
   def activate_green do

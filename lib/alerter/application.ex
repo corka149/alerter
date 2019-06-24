@@ -17,15 +17,14 @@ defmodule Alerter.Application do
   # List all child processes to be supervised
   def children(:host) do
     [
-      Alerter,
       {Task, fn -> TrafficLightServer.accept(4040) end}
     ]
   end
 
   def children(_target) do
     [
-      # Starts a worker by calling: Alerter.Worker.start_link(arg)
-      # {Alerter.Worker, arg},
+      Alerter,
+      {Task, fn -> TrafficLightServer.accept(4040) end}
     ]
   end
 end

@@ -10,9 +10,19 @@ defmodule TrafficLightServer do
     # 3. `active: false` - blocks on `:gen_tcp.recv/2` until data is available
     # 4. `reuseaddr: true` - allows us to reuse the address if the listener crashes
     #
-    {:ok, socket} = :gen_udp.open(port, [:binary, active: false, reuseaddr: true])
+    socket = loop_acquire_socket port
     Logger.info "Accepting connections on port #{port}"
     loop_receiver socket
+  end
+
+  defp loop_acquire_socket(port) do
+    case :gen_udp.open(port, [:binary, active: false, reuseaddr: true]) do
+      {:ok, socket}     -> socket
+      {:error, reason}  ->
+        Logger.error "Couldn't launch #{__MODULE__} -  Reason: #{reason}. Will retry it in 5 seconds."
+        Process.sleep(5000)
+        loop_acquire_socket(port)
+    end
   end
 
   defp loop_receiver(socket) do
@@ -24,9 +34,10 @@ defmodule TrafficLightServer do
 
   def toggle_traffic_light(message) do
     cond do
-      message =~ "green" -> Alerter.activate_green()
+      message =~ "green"  -> Alerter.activate_green()
       message =~ "yellow" -> Alerter.activate_yellow()
-      message =~ "red" -> Alerter.activate_red()
+      message =~ "red"    -> Alerter.activate_red()
+      true                -> nil
     end
   end
 end

@@ -6,7 +6,7 @@ defmodule Alerter.MixProject do
   def project do
     [
       app: :alerter,
-      version: "0.1.0",
+      version: "0.1.1",
       elixir: "~> 1.8",
       archives: [nerves_bootstrap: "~> 1.5"],
       start_permanent: Mix.env() == :prod,
