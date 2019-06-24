@@ -57,7 +57,7 @@ node_name = if Mix.env() != :prod, do: "alerter"
 config :nerves_init_gadget,
   ifname: "usb0",
   address_method: :dhcpd,
-  mdns_domain: "nerves.local",
+  mdns_domain: "alerter.local",
   node_name: node_name,
   node_host: :mdns_domain
 
